@@ -294,7 +294,7 @@ var diff = {
     }
     for (i = 0; i < m1.length; i++) { addHunk(m1[i], 0); }
     for (i = 0; i < m2.length; i++) { addHunk(m2[i], 2); }
-    hunks.sort();
+    hunks.sort(function (x, y) { return x[0] - y[0] });
 
     var result = [];
     var commonOffset = 0;
@@ -313,7 +313,7 @@ var diff = {
       while (hunkIndex < hunks.length - 1) {
         var maybeOverlapping = hunks[hunkIndex + 1];
         var maybeLhs = maybeOverlapping[0];
-        if (maybeLhs > regionRhs) {
+        if (maybeLhs >= regionRhs) {
           break;
         }
         regionRhs = Math.max(regionRhs, maybeLhs + maybeOverlapping[2]);
